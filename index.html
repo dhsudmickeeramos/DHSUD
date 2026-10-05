@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | DHSUD VI - AFD</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; }
+        body { background: #f2f5f9; display: flex; justify-content: center; padding: 2rem 1rem; }
+        .dashboard {
+            max-width: 1300px; width: 100%; background: white; border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,.25); overflow: hidden;
+            border: 1px solid #e9edf4;
+        }
+        .header {
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+            padding: 1.5rem 2rem; background: #fff; border-bottom: 1px solid #dbe2eb;
+        }
+        .logo-area { display: flex; align-items: center; gap: 1rem; }
+        .logo-icon { width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 12px; overflow: hidden; }
+        .logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+        .logo-text { font-weight: 700; font-size: 1.4rem; color: #0b2b44; }
+        .logo-text span { font-weight: 400; color: #5f7d9c; font-size: 1rem; margin-left: 8px; }
+        .nav-links { display: flex; gap: 1.5rem; font-weight: 500; color: #2c3e50; font-size: 0.95rem; }
+        .nav-links a { text-decoration: none; color: #2c3e50; padding-bottom: 4px; border-bottom: 2px solid transparent; transition: .2s; }
+        .nav-links a:hover, .nav-links a.active { border-bottom-color: #1e6f9f; color: #1e6f9f; }
+        .admin-body { padding: 2rem; }
+        .admin-body h1 { color: #0b2b44; font-size: 2rem; margin-bottom: .6rem; }
+        .admin-body p { color: #1e3a5f; background: #f0f6fe; border-left: 6px solid #1e6f9f; padding: 1.2rem 1.5rem; border-radius: 16px; max-width: 800px; }
+        .footer-note { padding: 1rem 2rem 1.5rem; font-size: .8rem; color: #8ca3b9; border-top: 1px solid #e9edf4; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <header class="header">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <img src="DHSUD LOGO" alt="DHSUD Logo">
+                </div>
+                <div class="logo-text">DHSUD VI <span>| Administrative and Finance Division</span></div>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="admin.html" class="active">Admin</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Contact</a>
+            </div>
+        </header>
+        <div class="admin-body">
+            <h1>Admin Dashboard</h1>
+            <p>Welcome, Administrator. This area is for authorized personnel only.</p>
+        </div>
+        <div class="footer-note">DHSUD Region VI – Administrative and Finance Division</div>
+    </div>
+</body>
+</html>
