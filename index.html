@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHSUD VI - AFD | Administrative & Finance Division</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #f2f5f9;
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .dashboard {
+            max-width: 1300px;
+            width: 100%;
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            border: 1px solid #e9edf4;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem 2rem;
+            background: #ffffff;
+            border-bottom: 1px solid #dbe2eb;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.4rem;
+            letter-spacing: -0.3px;
+            color: #0b2b44;
+        }
+
+        .logo-text span {
+            font-weight: 400;
+            color: #5f7d9c;
+            font-size: 1rem;
+            margin-left: 8px;
+        }
+
+        /* right side: nav + sign in */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            font-weight: 500;
+            color: #2c3e50;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            transition: 0.2s;
+            padding-bottom: 4px;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-links a:hover {
+            border-bottom-color: #1e6f9f;
+            color: #1e6f9f;
+        }
+
+        /* ===== SIGN IN BUTTON ===== */
+        .signin-btn {
+            background: #0b2b44;
+            color: white;
+            border: none;
+            padding: 0.65rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 4px 8px rgba(0, 40, 70, 0.15);
+            white-space: nowrap;
+            border: 1px solid #0b2b44;
+        }
+
+        .signin-btn i {
+            font-size: 0.9rem;
+        }
+
+        .signin-btn:hover {
+            background: #1e6f9f;
+            border-color: #1e6f9f;
+            box-shadow: 0 8px 16px rgba(30, 111, 159, 0.25);
+            transform: translateY(-1px);
+        }
+
+        /* ===== MODAL ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(11, 43, 68, 0.55);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.25s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-box {
+            background: #ffffff;
+            width: 100%;
+            max-width: 420px;
+            border-radius: 24px;
+            padding: 2.2rem 2rem 1.8rem 2rem;
+            position: relative;
+            box-shadow: 0 30px 60px -12px rgba(0, 30, 60, 0.35);
+            animation: slideUp 0.3s ease;
+            border: 1px solid #e2eaf2;
+            margin: 1rem;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            background: transparent;
+            border: none;
+            font-size: 1.4rem;
+            color: #8ca3b9;
+            cursor: pointer;
+            transition: 0.2s;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: #f0f4f9;
+            color: #0b2b44;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .modal-header i {
+            font-size: 2.6rem;
+            color: #1e6f9f;
+            background: #e8f2fc;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.9rem;
+        }
+
+        .modal-header h2 {
+            font-size: 1.5rem;
+            color: #0b2b44;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .modal-header p {
+            font-size: 0.88rem;
+            color: #5f7d9c;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #1e3a5f;
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.2px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 14px;
+            color: #8ca3b9;
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 2.6rem;
+            border: 1.5px solid #dbe2eb;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: #1e3a5f;
+            transition: 0.2s;
+            background: #fafcff;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .input-wrapper input:focus {
+            border-color: #1e6f9f;
+            background: #ffffff;
+            box-shadow: 0 0 0 3px rgba(30, 111, 159, 0.12);
+        }
+
+        .input-wrapper input::placeholder {
+            color: #a7b8ca;
+        }
+
+        .modal-submit {
+            width: 100%;
+            padding: 0.85rem;
+            background: #0b2b44;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .modal-submit:hover {
+            background: #1e6f9f;
+            box-shadow: 0 8px 18px -6px rgba(30, 111, 159, 0.5);
+        }
+
+        .modal-submit:disabled {
+            background: #8ca3b9;
+            cursor: not-allowed;
+        }
+
+        .modal-message {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 0.7rem;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .modal-message.error {
+            display: block;
+            background: #fdeaea;
+            color: #b42318;
+            border: 1px solid #f5c6c6;
+        }
+
+        .modal-message.success {
+            display: block;
+            background: #e7f6ec;
+            color: #0f7b3e;
+            border: 1px solid #b8e6c9;
+        }
+
+        .modal-footer-text {
+            text-align: center;
+            margin-top: 1.2rem;
+            font-size: 0.78rem;
+            color: #8ca3b9;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .main-grid {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .intro {
+            padding: 2rem 2rem 1rem 2rem;
+        }
+
+        .intro h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #0b2b44;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.5px;
+        }
+
+        .intro p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #1e3a5f;
+            max-width: 900px;
+            background: #f0f6fe;
+            padding: 1.5rem 1.8rem;
+            border-radius: 20px;
+            border-left: 6px solid #1e6f9f;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+        }
+
+        .calendar-events-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 1.5rem 2rem 2rem 2rem;
+        }
+
+        .calendar-card {
+            flex: 2;
+            min-width: 380px;
+            background: #f9fcff;
+            border-radius: 24px;
+            padding: 1.5rem 1.5rem 1rem 1.5rem;
+            border: 1px solid #dde5ef;
+            box-shadow: 0 8px 18px -6px rgba(0, 30, 60, 0.08);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            color: #0b2b44;
+            padding: 0 0.2rem;
+        }
+
+        .calendar-header .month {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            gap: 6px;
+        }
+
+        .day-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #7795b0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.5rem 0;
+        }
+
+        .day {
+            aspect-ratio: 1/1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-weight: 500;
+            color: #1e3a5f;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+            border: 1px solid #e6ecf3;
+            font-size: 0.95rem;
+            transition: 0.1s;
+            padding: 2px;
+            line-height: 1.1;
+        }
+
+        .day.other-month {
+            color: #afc1d4;
+            background: #f6f9fd;
+            border-color: #eef2f7;
+        }
+
+        .has-events-badge {
+            font-size: 0.7rem;
+            color: #1e6f9f;
+            font-weight: 600;
+            margin-top: 8px;
+            text-align: center;
+            background: #e4f0fa;
+            padding: 6px 12px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        .events-card {
+            flex: 1.2;
+            min-width: 260px;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 1.5rem;
+            border: 1px solid #dde5ef;
+            box-shadow: 0 8px 18px -6px rgba(0, 30, 60, 0.08);
+        }
+
+        .events-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0b2b44;
+            margin-bottom: 1.4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .events-card h3 span {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #5f7d9c;
+        }
+
+        .no-events-message {
+            color: #8ca3b9;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 2rem 0;
+            font-style: italic;
+        }
+
+        .footer-note {
+            padding: 1rem 2rem 1.5rem 2rem;
+            font-size: 0.8rem;
+            color: #8ca3b9;
+            border-top: 1px solid #e9edf4;
+            text-align: center;
+        }
+
+        @media (max-width: 950px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.2rem;
+            }
+            .header-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .signin-btn {
+                padding: 0.6rem 1.2rem;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .intro h1 {
+                font-size: 1.8rem;
+            }
+            .calendar-events-row {
+                flex-direction: column;
+            }
+            .header-right {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            .signin-btn {
+                align-self: flex-end;
+            }
+        }
+        /* ===== REAL-TIME CALENDAR ADDITIONS (index) ===== */
+.calendar-header .nav-btns { display: flex; gap: 0.4rem; align-items: center; }
+.calendar-header .nav-btns button {
+    background: #eef4fa; border: 1px solid #dde5ef; color: #0b2b44;
+    width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+    font-size: 0.9rem; display: inline-flex; align-items: center; justify-content: center;
+    transition: 0.2s;
+}
+.calendar-header .nav-btns button:hover { background: #1e6f9f; color: #fff; border-color: #1e6f9f; }
+.calendar-header .today-btn {
+    font-size: 0.72rem; padding: 0.35rem 0.8rem; border-radius: 40px;
+    background: #0b2b44; color: #fff; border: none; cursor: pointer; margin-left: 0.3rem;
+}
+
+.day { position: relative; cursor: pointer; }
+.day.today {
+    background: #fff7d6 !important;
+    border-color: #d4a017 !important;
+    color: #7a5b00;
+    font-weight: 700;
+    box-shadow: 0 0 0 2px #f5e08c inset;
+}
+.day.has-events { background: #eaf3fc; border-color: #b9d6ef; }
+.day .day-events {
+    display: flex; flex-direction: column; gap: 2px; margin-top: 3px;
+    width: 100%; overflow: hidden;
+}
+.day .day-event-dot {
+    width: 100%; font-size: 0.5rem; line-height: 1.1; padding: 1px 3px;
+    border-radius: 4px; color: #fff; white-space: nowrap; overflow: hidden;
+    text-overflow: ellipsis; text-align: left;
+}
+.day.other-month .day-event-dot { opacity: 0.55; }
+
+.events-card .event-row {
+    display: flex; gap: 0.7rem; padding: 0.65rem 0.4rem;
+    border-bottom: 1px solid #eef2f7; align-items: flex-start;
+}
+.events-card .event-row:last-child { border-bottom: none; }
+.events-card .event-date-badge {
+    flex-shrink: 0; width: 44px; text-align: center; background: #eaf3fc;
+    border-radius: 10px; padding: 4px 2px; color: #0b2b44;
+}
+.events-card .event-date-badge .d { font-size: 1.05rem; font-weight: 700; line-height: 1; }
+.events-card .event-date-badge .m { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.5px; color: #5f7d9c; }
+.events-card .event-info { min-width: 0; flex: 1; }
+.events-card .event-title { font-size: 0.86rem; font-weight: 600; color: #0b2b44; word-break: break-word; }
+.events-card .event-meta { font-size: 0.72rem; color: #5f7d9c; margin-top: 2px; }
+.events-card .event-type-pill {
+    display: inline-block; font-size: 0.6rem; font-weight: 600; color: #fff;
+    padding: 1px 8px; border-radius: 20px; margin-top: 4px;
+}
+.events-card .event-scroll { max-height: 380px; overflow-y: auto; padding-right: 4px; }
+.events-card .event-count { font-size: 0.8rem; font-weight: 500; color: #5f7d9c; }
+.events-card .has-events-badge { margin-top: 0.5rem; }
+.calendar-error { font-size: 0.72rem; color: #b42318; text-align: center; padding: 4px; }
+    </style>
+</head>
+<body>
+    <script>
+    // ============================================================
+    // HOME PAGE REAL-TIME CALENDAR — shares data with calendar.html
+    // ============================================================
+    const HOME_CALENDAR_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxM6c-BZtuztblgiMdyRpoU5JbbtHKsWigU4OXLNzg4zNa0iAJGIEkK9JLcPNS7y7g/exec";
+
+    const HOME_TYPE_COLORS = {
+        Meeting: "#3b82f6", Workshop: "#f59e0b", Training: "#10b981",
+        Seminar: "#8b5cf6", Hearing: "#ef4444", Deadline: "#ec489a", Other: "#6b7280"
+    };
+
+    let homeActivities = [];
+    let homeViewDate = new Date(); // first day of displayed month
+
+    function homeEscape(s) {
+        return s ? String(s).replace(/[&<>"']/g, m => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        }[m])) : "";
+    }
+
+    function homeParseDate(v) {
+        if (!v) return null;
+        // Strings like "2026-05-10T09:00" are local-time; Date() handles them.
+        const d = new Date(v);
+        return isNaN(d.getTime()) ? null : d;
+    }
+
+    function homeStartOfDay(d) {
+        const x = new Date(d);
+        x.setHours(0, 0, 0, 0);
+        return x;
+    }
+
+    function homeSameDay(a, b) {
+        return a.getFullYear() === b.getFullYear() &&
+               a.getMonth() === b.getMonth() &&
+               a.getDate() === b.getDate();
+    }
+
+    function homeActivitiesForDay(date) {
+        const target = homeStartOfDay(date);
+        return homeActivities.filter(a => {
+            const s = homeParseDate(a.startDateTime);
+            const e = homeParseDate(a.endDateTime) || s;
+            if (!s) return false;
+            const sDay = homeStartOfDay(s);
+            const eDay = homeStartOfDay(e);
+            return target >= sDay && target <= eDay;
+        }).sort((a, b) => (homeParseDate(a.startDateTime) || 0) - (homeParseDate(b.startDateTime) || 0));
+    }
+
+    // ---------- Load from Google Sheets (same source as calendar.html) ----------
+    async function homeLoadActivities() {
+        try {
+            const resp = await fetch(`${HOME_CALENDAR_SCRIPT_URL}?action=get&data_type=calendar&_=${Date.now()}`);
+            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+            let result = await resp.json();
+            let data = result;
+            if (result && result.data && Array.isArray(result.data)) data = result.data;
+            else if (result && result.success && Array.isArray(result.data)) data = result.data;
+
+            if (Array.isArray(data)) {
+                homeActivities = data.map(a => ({
+                    ...a,
+                    attendees: a.attendees
+                        ? (typeof a.attendees === "string" ? JSON.parse(a.attendees || "[]") : a.attendees)
+                        : []
+                }));
+            } else {
+                homeActivities = [];
+            }
+            homeRenderAll();
+        } catch (err) {
+            console.warn("Home calendar: Google Sheets load failed, falling back to localStorage.", err);
+            try {
+                const stored = localStorage.getItem("calendarActivities");
+                homeActivities = stored ? JSON.parse(stored) : [];
+            } catch (_) { homeActivities = []; }
+            homeRenderAll(true);
+        }
+    }
+
+    // ---------- Render calendar grid ----------
+    function homeRenderGrid() {
+        const grid = document.getElementById("homeCalGrid");
+        const monthLabel = document.getElementById("homeCalMonth");
+        const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        const shortMonths = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+        const weekdayNames = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+
+        const year = homeViewDate.getFullYear();
+        const month = homeViewDate.getMonth();
+        monthLabel.textContent = `${monthNames[month]} ${year}`;
+
+        const today = homeStartOfDay(new Date());
+        const firstOfMonth = new Date(year, month, 1);
+        const startOffset = firstOfMonth.getDay();
+        const gridStart = new Date(year, month, 1 - startOffset);
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const totalCells = Math.ceil((startOffset + daysInMonth) / 7) * 7;
+
+        let html = weekdayNames.map(w => `<div class="day-name">${w}</div>`).join("");
+
+        let eventCountThisMonth = 0;
+
+        for (let i = 0; i < totalCells; i++) {
+            const cellDate = new Date(gridStart);
+            cellDate.setDate(gridStart.getDate() + i);
+            const isOther = cellDate.getMonth() !== month;
+            const isToday = homeSameDay(cellDate, today);
+            const dayActs = homeActivitiesForDay(cellDate);
+
+            if (isToday) {
+                // ensure grid stays visible if displayed month contains today
+            }
+            if (!isOther) eventCountThisMonth += dayActs.length;
+
+            const classes = ["day"];
+            if (isOther) classes.push("other-month");
+            if (isToday) classes.push("today");
+            if (dayActs.length) classes.push("has-events");
+
+            let dots = "";
+            if (dayActs.length) {
+                const shown = dayActs.slice(0, 2);
+                dots = `<div class="day-events">` +
+                    shown.map(a => {
+                        const color = HOME_TYPE_COLORS[a.type] || "#6b7280";
+                        const label = a.name ? (a.name.length > 12 ? a.name.slice(0, 11) + "…" : a.name) : (a.type || "Event");
+                        return `<span class="day-event-dot" style="background:${color}" title="${homeEscape(a.name || a.type || '')}">${homeEscape(label)}</span>`;
+                    }).join("") +
+                    (dayActs.length > 2 ? `<span class="day-event-dot" style="background:#94a3b8">+${dayActs.length - 2} more</span>` : "") +
+                    `</div>`;
+            }
+
+            html += `<div class="${classes.join(" ")}" data-date="${cellDate.toISOString().slice(0,10)}" title="${homeEscape(dayActs.map(a=>a.name||a.type).join(' • ')) || ''}">
+                        <span>${cellDate.getDate()}</span>${dots}
+                    </div>`;
+        }
+
+        grid.innerHTML = html;
+
+        // Add click handlers to jump/scroll events list
+        grid.querySelectorAll(".day").forEach(el => {
+            el.addEventListener("click", () => {
+                const iso = el.getAttribute("data-date");
+                if (!iso) return;
+                const [y, m, d] = iso.split("-").map(Number);
+                homeViewDate = new Date(y, m - 1, 1);
+                homeRenderGrid();
+                homeRenderEventsList();
+            });
+        });
+
+        // Badge under calendar
+        const badge = document.getElementById("homeCalBadge");
+        if (badge) {
+            if (eventCountThisMonth === 0) {
+                badge.innerHTML = `<i class="fas fa-circle" style="font-size:0.5rem;color:#94a3b8;margin-right:6px;"></i> No Events`;
+                badge.style.background = "#eef2f7";
+                badge.style.color = "#5f7d9c";
+            } else {
+                badge.innerHTML = `<i class="fas fa-circle" style="font-size:0.5rem;color:#1e6f9f;margin-right:6px;"></i> ${eventCountThisMonth} event${eventCountThisMonth > 1 ? "s" : ""} this month`;
+                badge.style.background = "#e4f0fa";
+                badge.style.color = "#1e6f9f";
+            }
+        }
+    }
+
+    // ---------- Render events list ----------
+    function homeRenderEventsList() {
+        const list = document.getElementById("homeEventsList");
+        const monthLabel = document.getElementById("homeEventsMonth");
+        const countLabel = document.getElementById("homeEventCount");
+        const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+        const shortMonths = ["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"];
+
+        const year = homeViewDate.getFullYear();
+        const month = homeViewDate.getMonth();
+        monthLabel.textContent = `${monthNames[month]} ${year}`;
+
+        // Collect all activity-days that intersect this month
+        const monthStart = new Date(year, month, 1);
+        const monthEnd = new Date(year, month + 1, 0);
+
+        const entries = [];
+        homeActivities.forEach(a => {
+            const s = homeParseDate(a.startDateTime);
+            const e = homeParseDate(a.endDateTime) || s;
+            if (!s) return;
+            // Does [s, e] intersect [monthStart, monthEnd]?
+            if (e < monthStart || s > monthEnd) return;
+            const displayDate = s < monthStart ? monthStart : s;
+            entries.push({ activity: a, date: displayDate });
+        });
+
+        entries.sort((a, b) => a.date - b.date);
+
+        countLabel.textContent = entries.length
+            ? `${entries.length} event${entries.length > 1 ? "s" : ""} scheduled`
+            : "No events scheduled";
+
+        if (!entries.length) {
+            list.innerHTML = `<div class="no-events-message">
+                <i class="fas fa-calendar-times" style="font-size: 1.5rem; display: block; margin-bottom: 0.8rem; opacity: 0.5;"></i>
+                No events scheduled
+            </div>`;
+            return;
+        }
+
+        list.innerHTML = entries.map(({ activity: a, date }) => {
+            const color = HOME_TYPE_COLORS[a.type] || "#6b7280";
+            const s = homeParseDate(a.startDateTime);
+            const timeStr = s ? s.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "";
+            const loc = a.location ? ` • ${homeEscape(a.location)}` : "";
+            const link = a.meetingLink
+                ? ` • <a href="${homeEscape(a.meetingLink)}" target="_blank" rel="noopener noreferrer" style="color:#1e6f9f;">Join</a>`
+                : "";
+            return `<div class="event-row">
+                <div class="event-date-badge">
+                    <div class="d">${date.getDate()}</div>
+                    <div class="m">${shortMonths[date.getMonth()]}</div>
+                </div>
+                <div class="event-info">
+                    <div class="event-title">${homeEscape(a.name || a.type || "Event")}</div>
+                    <div class="event-meta">${homeEscape(timeStr)}${loc}${link}</div>
+                    <span class="event-type-pill" style="background:${color}">${homeEscape(a.type || "Other")}</span>
+                </div>
+            </div>`;
+        }).join("");
+    }
+
+    function homeRenderAll(isLocalFallback = false) {
+        homeRenderGrid();
+        homeRenderEventsList();
+        if (isLocalFallback) {
+            const list = document.getElementById("homeEventsList");
+            if (list) {
+                const warn = document.createElement("div");
+                warn.className = "calendar-error";
+                warn.textContent = "Showing cached data (Google Sheets unreachable).";
+                list.prepend(warn);
+            }
+        }
+    }
+
+    // ---------- Navigation ----------
+    function homeCalPrev() {
+        homeViewDate = new Date(homeViewDate.getFullYear(), homeViewDate.getMonth() - 1, 1);
+        homeRenderGrid();
+        homeRenderEventsList();
+    }
+    function homeCalNext() {
+        homeViewDate = new Date(homeViewDate.getFullYear(), homeViewDate.getMonth() + 1, 1);
+        homeRenderGrid();
+        homeRenderEventsList();
+    }
+    function homeCalToday() {
+        const now = new Date();
+        homeViewDate = new Date(now.getFullYear(), now.getMonth(), 1);
+        homeRenderGrid();
+        homeRenderEventsList();
+    }
+
+    document.getElementById("homeCalPrev").addEventListener("click", homeCalPrev);
+    document.getElementById("homeCalNext").addEventListener("click", homeCalNext);
+    document.getElementById("homeCalToday").addEventListener("click", homeCalToday);
+
+    // ---------- Init ----------
+    (function initHomeCalendar() {
+        const now = new Date();
+        homeViewDate = new Date(now.getFullYear(), now.getMonth(), 1);
+        // Render immediately with cached data (if any), then refresh from Sheets.
+        try {
+            const stored = localStorage.getItem("calendarActivities");
+            if (stored) homeActivities = JSON.parse(stored) || [];
+        } catch (_) { homeActivities = []; }
+        homeRenderAll();
+        homeLoadActivities();
+        // Refresh once per minute to stay in sync with calendar.html edits
+        setInterval(homeLoadActivities, 60000);
+    })();
+</script>
+    <div class="dashboard">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <img src="DHSUD_LOGO.png" alt="DHSUD_LOGO.png">
+                </div>
+                <div class="logo-text">
+                    DHSUD VI <span>| Administrative and Finance Division</span>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="nav-links">
+                    <a href="#">Home</a>
+                    <a href="admin.html">Admin</a>
+                    <a href="#">About</a>
+                    <a href="#">Services</a>
+                    <a href="#">Contact</a>
+                </div>
+                <button class="signin-btn" id="signinBtn">
+                    <i class="fas fa-user-circle"></i> Sign In
+                </button>
+            </div>
+        </header>
+
+        <!-- Main content -->
+        <div class="main-grid">
+            <div class="intro">
+                <h1>Administrative and Finance Division (AFD)</h1>
+                <p>
+                    The Administrative and Finance Division (AFD) is a core support division of the Department of Human Settlements and Urban Development (DHSUD) that provides essential administrative, financial, human resource, records, procurement, property, and general support services. It ensures the efficient management of the Department’s administrative and financial resources, supports the implementation of programs and operations, and facilitates compliance with government policies, rules, and regulations.
+                </p>
+            </div>
+
+            <div class="calendar-events-row">
+    <div class="calendar-card">
+    <div class="calendar-header">
+        <div class="month" id="homeCalMonth">Loading…</div>
+        <div class="nav-btns">
+            <button id="homeCalPrev" aria-label="Previous month" title="Previous month">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button id="homeCalToday" class="today-btn" aria-label="Go to today">Today</button>
+            <button id="homeCalNext" aria-label="Next month" title="Next month">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+    <div class="calendar-grid" id="homeCalGrid">
+        <!-- Populated by JS -->
+    </div>
+    <div style="text-align: center; margin-top: 12px;">
+        <span class="has-events-badge" id="homeCalBadge">
+            <i class="fas fa-circle" style="font-size: 0.5rem; color: #1e6f9f; margin-right: 6px;"></i> Loading events…
+        </span>
+    </div>
+</div>
+
+    <div class="events-card">
+       <h3>
+        Calendar Events
+        <span id="homeEventsMonth">…</span>
+    </h3>
+    <div class="event-count" id="homeEventCount">Loading…</div>
+    <div class="event-scroll" id="homeEventsList">
+        <div class="no-events-message">
+            <i class="fas fa-calendar-times" style="font-size: 1.5rem; display: block; margin-bottom: 0.8rem; opacity: 0.5;"></i>
+            Loading events…
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+
+        <div class="footer-note">
+            DHSUD Region VI – Administrative and Finance Division
+        </div>
+    </div>
+
+    <!-- ===== SIGN-IN MODAL ===== -->
+    <div class="modal-overlay" id="signinModal">
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-header">
+                <i class="fas fa-user-circle"></i>
+                <h2>Sign In</h2>
+                <p>Enter your credentials to access the portal</p>
+            </div>
+
+            <form id="signinForm" autocomplete="on">
+                <div class="form-group">
+                    <label for="username">Username or Email</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" name="username"
+                               placeholder="Enter username or email" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password"
+                               placeholder="Enter password" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="modal-submit" id="submitBtn">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </button>
+                <div class="modal-message" id="modalMessage"></div>
+            </form>
+
+            <div class="modal-footer-text">
+                DHSUD Region VI &middot; Administrative and Finance Division
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ====== CONFIG: paste your Google Apps Script Web App URL here ======
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxvy2PWXfv-obuHIOSlLye6JB9NLJJP9FG5gpeAeGgmpF7oFblFkF2ZsP_IPer5wrOx/exec";
+        // =====================================================================
+
+        const modal = document.getElementById('signinModal');
+        const signinBtn = document.getElementById('signinBtn');
+        const modalClose = document.getElementById('modalClose');
+        const signinForm = document.getElementById('signinForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const modalMessage = document.getElementById('modalMessage');
+
+        // Open modal
+        signinBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+            modalMessage.className = 'modal-message';
+            modalMessage.textContent = '';
+            document.getElementById('username').focus();
+        });
+
+        // Close modal
+        modalClose.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+        });
+
+        function closeModal() {
+            modal.classList.remove('active');
+            signinForm.reset();
+            modalMessage.className = 'modal-message';
+            modalMessage.textContent = '';
+        }
+
+        function showMessage(text, type) {
+            modalMessage.textContent = text;
+            modalMessage.className = 'modal-message ' + type;
+        }
+
+        // Handle form submit
+        signinForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (!username || !password) {
+                showMessage('Please enter both username and password.', 'error');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in...';
+            modalMessage.className = 'modal-message';
+
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // required for Apps Script web app
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+
+                // With no-cors we can't read the response, so assume success if no throw
+                showMessage('Signing in... please wait.', 'success');
+
+                // Optional: redirect after short delay
+                setTimeout(() => {
+                    // window.location.href = 'admin.html';
+                    closeModal();
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+                }, 1200);
+
+            } catch (err) {
+                console.error('Sign-in error:', err);
+                showMessage('Unable to connect. Please try again.', 'error');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+            }
+        });
+    </script>
+</body>
+</html>
